@@ -2,10 +2,54 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>App Manutenzione</title>
+<title>Risparmio Energia</title>
+<style>
+body{background:#0d0d0d;color:white;font-family:sans-serif;text-align:center;padding:30px}
+input,button{padding:10px;margin:10px;border-radius:8px;border:none}
+button{background:#00c853;color:white}
+.card{background:#1a1a1a;padding:20px;border-radius:12px;margin-top:20px}
+a{color:#00e5ff}
+</style>
 </head>
-<body style="background:black;color:white;text-align:center;padding:40px;font-family:sans-serif;">
-<h1>La mia app funziona 🎉</h1>
-<p>Primo passo completato.</p>
+<body>
+
+<h1>💰 Calcolo risparmio pellet</h1>
+
+<p>Quanto paghi un sacco di pellet (€)?</p>
+<input id="prezzo" type="number" placeholder="es. 6">
+
+<p>Quanti sacchi al mese?</p>
+<input id="sacchi" type="number" placeholder="es. 30">
+
+<br>
+<button onclick="calcola()">Calcola spesa</button>
+
+<div id="risultato" class="card" style="display:none"></div>
+
+<div class="card">
+<h2>Prodotti consigliati</h2>
+
+<a href="https://www.amazon.it" target="_blank">
+Aspiracenere pellet (guadagni da qui)
+</a>
+<br><br>
+
+<a href="https://www.amazon.it" target="_blank">
+Kit pulizia stufa
+</a>
+
+</div>
+
+<script>
+function calcola(){
+let prezzo=document.getElementById("prezzo").value;
+let sacchi=document.getElementById("sacchi").value;
+let totale=prezzo*sacchi;
+document.getElementById("risultato").style.display="block";
+document.getElementById("risultato").innerHTML=
+"Hai speso circa <b>"+totale+"€ al mese</b><br>≈ "+(totale*12)+"€ l'anno";
+}
+</script>
+
 </body>
 </html>
