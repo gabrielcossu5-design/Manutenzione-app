@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>App Manutenzione</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+    }
+    ul {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>App Manutenzione</h1>
+
+  <input type="text" id="manutenzione" placeholder="Scrivi una manutenzione">
+  <button onclick="aggiungi()">Aggiungi</button>
+
+  <ul id="lista"></ul>
+
+  <script>
+    function aggiungi() {
+      const testo = document.getElementById("manutenzione").value;
+      if (testo === "") return;
+
+      const li = document.createElement("li");
+      li.textContent = testo;
+      document.getElementById("lista").appendChild(li);
+
+      document.getElementById("manutenzione").value = "";
+    }
+  </script>
+
+</body>
+</html>
