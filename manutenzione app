@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App Manutenzione Pro</title>
+  <style>
+    /* === CSS === */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+    }
+
+    section {
+      margin: 20px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    input {
+      padding: 10px;
+      margin: 5px 5px 5px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ad-banner {
+      background-color: #ffeeba;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .ad-banner a {
+      text-decoration: none;
+      color: #856404;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>App Manutenzione Pro 💡</h1>
+  </header>
+
+  <section class="add-maintenance">
+    <h2>Aggiungi Manutenzione</h2>
+    <input type="text" id="maintenanceName" placeholder="Nome manutenzione">
+    <input type="date" id="maintenanceDate">
+    <button onclick="addMaintenance()">Aggiungi</button>
+  </section>
+
+  <section class="maintenance-list">
+    <h2>Manutenzioni Programmate</h2>
+    <ul id="maintenanceList"></ul>
+  </section>
+
+  <section class="recommended-products">
+    <h2>Prodotti Consigliati 🛒</h2>
+    <ul id="productList"></ul>
+  </section>
+
+  <section class="ads">
+    <h2>Offerte Esclusive 🎁</h2>
+    <div class="ad-banner">
+      <a href="https://example.com/affiliazione" target="_blank">
+        Scopri i migliori prodotti per la tua manutenzione!
+      </a>
+    </div>
+  </section>
+
+  <script>
+    /* === JS === */
+    // Lista manutenzioni salvata in locale
+    let maintenanceList = JSON.parse(localStorage.getItem("maintenanceList")) || [];
+
+    let productList = [
+      { name: "Olio lubrificante", link: "https://example.com/olio" },
+      { name: "Filtro aria", link: "https://example.com/filtro" },
+      { name: "Spazzola pulizia", link: "https://example.com/spazzola" }
+    ];
+
+    // Aggiungi manutenzione
+    function addMaintenance() {
+      const name = document.getElementById("maintenanceName").value;
+      const date = document.getElementById("maintenanceDate").value;
+      if (!name || !date) {
+        alert("Compila tutti i campi!");
+        return;
+      }
+
+      maintenanceList.push({ name, date });
+      localStorage.setItem("maintenanceList", JSON.stringify(maintenanceList));
+      renderMaintenanceList();
+      document.getElementById("maintenanceName").value = "";
+      document.getElementById("maintenanceDate").value = "";
+    }
+
+    // Visualizza manutenzioni
+    function renderMaintenanceList() {
+      const list = document.getElementById("maintenanceList");
+      list.innerHTML = "";
+      maintenanceList.forEach((m, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          ${m.name} - ${m.date} 
+          <div>
+            <button onclick="deleteMaintenance(${index})">Elimina</button>
+          </div>`;
+        list.appendChild(li);
+      });
+    }
+
+    // Elimina manutenzione
+    function deleteMaintenance(index) {
+      maintenanceList.splice(index, 1);
+      localStorage.setItem("maintenanceList", JSON.stringify(maintenanceList));
+      renderMaintenanceList();
+    }
+
+    // Mostra prodotti consigliati
+    function renderProductList() {
+      const list = document.getElementById("productList");
+      list.innerHTML = "";
+      productList.forEach(p => {
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${p.link}" target="_blank">${p.name}</a>`;
+        list.appendChild(li);
+      });
+    }
+
+    // Notifiche (simulate con alert)
+    function checkNotifications() {
+      const today = new Date().toISOString().split("T")[0];
+      maintenanceList.forEach(m => {
+        if (m.date === today) {
+          alert(`Oggi devi fare: ${m.name}`);
+        }
+      });
+    }
+
+    // Inizializza app
+    renderMaintenanceList();
+    renderProductList();
+    checkNotifications();
+  </script>
+</body>
+</html>
