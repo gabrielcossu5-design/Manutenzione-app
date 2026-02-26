@@ -3,34 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quanto costa il pellet al mese</title>
-<meta name="description" content="Scopri quanto costa scaldarsi con una stufa a pellet e calcola la spesa reale mensile e stagionale.">
+
+<title>Calcolo Consumo e Spesa Pellet | Stufa a Pellet</title>
+
+<meta name="description" content="Calcola la spesa del pellet e scopri i prodotti consigliati per la manutenzione della stufa in base al tuo consumo.">
+<meta name="robots" content="index, follow">
+
+<style>
+body{
+    font-family:Arial, sans-serif;
+    background:#0f0f0f;
+    color:#ffffff;
+    text-align:center;
+    padding:25px;
+}
+
+h1{color:#ff9900;}
+h2{color:#ffb84d;}
+
+input, button{
+    padding:12px;
+    margin:8px;
+    font-size:18px;
+    border-radius:6px;
+    border:none;
+    width:90%;
+    max-width:320px;
+}
+
+button{
+    background:#ff9900;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.result{
+    font-size:22px;
+    margin-top:20px;
+    color:#00ff88;
+}
+
+.box{
+    background:#1c1c1c;
+    padding:20px;
+    margin:25px auto;
+    max-width:600px;
+    border-radius:12px;
+}
+
+.btn{
+    display:inline-block;
+    padding:12px 22px;
+    margin-top:12px;
+    background:#ff9900;
+    color:#000;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:6px;
+}
+
+footer{
+    margin-top:40px;
+    font-size:13px;
+    color:#aaa;
+}
+</style>
 </head>
-<body style="background:#0f0f0f;color:white;font-family:Arial;padding:25px;">
 
-<h1>Quanto costa scaldarsi con il pellet</h1>
+<body>
 
-<p>Il costo del pellet dipende da quanti sacchi consumi al mese e dal prezzo medio per sacco.</p>
+<!-- DISCLOSURE AMAZON -->
+<div class="box" style="font-size:14px;color:#ddd;">
+<strong>Trasparenza:</strong> alcuni link presenti in questa pagina sono link di affiliazione Amazon. Se acquisti tramite questi link potrei ricevere una commissione, senza costi aggiuntivi per te.
+</div>
 
-<p>Molte persone sottovalutano la spesa stagionale, che può superare facilmente i 700–1000€.</p>
+<h1>🔥 Calcolo Spesa Pellet</h1>
 
-<h2>Calcola la tua spesa reale</h2>
-
-<p>Ho creato un calcolatore gratuito che ti permette di stimare subito quanto spendi:</p>
-
-<p>
-👉 <a href="index.html" style="color:#ff9900;font-weight:bold;">
-Calcola ora il consumo di pellet
-</a>
+<p style="max-width:700px;margin:0 auto 20px auto;color:#ccc;">
+Inserisci i tuoi dati per scoprire quanto spendi di pellet e quali prodotti sono consigliati per la manutenzione della tua stufa.
 </p>
 
-<h2>Come ridurre i costi</h2>
+<p>Prezzo di un sacco (€)</p>
+<input type="number" id="prezzo" step="0.01">
 
-<ul>
-<li>Usare pellet certificato</li>
-<li>Pulire regolarmente la stufa</li>
-<li>Regolare bene la temperatura</li>
-</ul>
+<p>Sacchi consumati al mese</p>
+<input type="number" id="sacchi">
+
+<br>
+<button onclick="calcola()">Calcola spesa</button>
+
+<div class="result" id="risultato"></div>
+<div id="prodotti"></div>
+
+<!-- FAQ SEO -->
+<div class="box">
+<h2>Domande frequenti</h2>
+
+<p><strong>Quanti sacchi di pellet servono al mese?</strong><br>
+Dipende dall’uso e dall’isolamento della casa. Questo calcolatore ti aiuta a stimare la spesa reale.</p>
+
+<p><strong>Ogni quanto pulire la stufa a pellet?</strong><br>
+Con consumi medi o alti la pulizia va fatta ogni 4–5 giorni.</p>
+
+<p><strong>Come risparmiare pellet?</strong><br>
+Pellet di qualità, buona manutenzione e un termostato aiutano a ridurre i consumi.</p>
+</div>
+
+<footer>
+Partecipiamo al Programma di Affiliazione Amazon. Alcuni link presenti in questa pagina sono affiliati.
+</footer>
+
+<script>
+function calcola(){
+
+let prezzo = parseFloat(document.getElementById("prezzo").value);
+let sacchi = parseFloat(document.getElementById("sacchi").value);
+
+if(isNaN(prezzo) || isNaN(sacchi)){
+    alert("Inserisci valori validi");
+    return;
+}
+
+let mensile = prezzo * sacchi;
+let stagione = mensile * 6;
+
+let html = "";
+
+html += `
+<div class="box">
+<h2>Risultato</h2>
+<p><strong>Spesa mensile:</strong> ${mensile.toFixed(2)} €</p>
+<p><strong>Spesa stagione (6 mesi):</strong> ${stagione.toFixed(2)} €</p>
+</div>
+`;
+
+/* PELLET – sempre */
+html += `
+<div class="box">
+<h3>🔥 Pellet certificato alta resa</h3>
+<p>Migliore combustione e meno residui nella stufa.</p>
+<a href="https://amzn.to/4aWETIp" target="_blank" class="btn">Vedi offerta su Amazon</a>
+</div>
+`;
+
+/* KIT PULIZIA – consumo medio */
+if(sacchi > 10){
+html += `
+<div class="box">
+<h3>🧰 Kit pulizia stufa a pellet</h3>
+<p>Consigliato per manutenzione settimanale.</p>
+<a href="https://amzn.to/4s9idvr" target="_blank" class="btn">Scopri il prodotto</a>
+</div>
+`;
+}
+
+/* ASPIRACENERE – consumo alto */
+if(sacchi > 20){
+html += `
+<div class="box">
+<h3>🔧 Aspiracenere per stufa a pellet</h3>
+<p>Indispensabile con consumi elevati.</p>
+<a href="https://amzn.to/4azK2Y0" target="_blank" class="btn">Vedi su Amazon</a>
+</div>
+`;
+}
+
+/* TERMOSTATO – sempre */
+html += `
+<div class="box">
+<h3>🌡️ Termostato ambiente digitale</h3>
+<p>Aiuta a ridurre i consumi e migliorare il comfort.</p>
+<a href="https://amzn.to/4saBqNi" target="_blank" class="btn">Scopri su Amazon</a>
+</div>
+`;
+
+document.getElementById("prodotti").innerHTML = html;
+}
+</script>
 
 </body>
 </html>
