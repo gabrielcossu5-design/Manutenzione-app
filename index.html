@@ -1,184 +1,173 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Spesa Pellet</title>
 
-<title>Calcolo Consumo e Spesa Pellet | Stufa a Pellet</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<meta name="description" content="Calcola la spesa del pellet e scopri i prodotti consigliati per la manutenzione della stufa in base al tuo consumo.">
-<meta name="robots" content="index, follow">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f7f7f7;
+            color: #333;
+        }
 
-<style>
-body{
-    font-family:Arial, sans-serif;
-    background:#0f0f0f;
-    color:#ffffff;
-    text-align:center;
-    padding:25px;
-}
+        header, footer {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-h1{color:#ff9900;}
-h2{color:#ffb84d;}
+        h1 {
+            color: #2c3e50;
+        }
 
-input, button{
-    padding:12px;
-    margin:8px;
-    font-size:18px;
-    border-radius:6px;
-    border:none;
-    width:90%;
-    max-width:320px;
-}
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-button{
-    background:#ff9900;
-    font-weight:bold;
-    cursor:pointer;
-}
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
 
-.result{
-    font-size:22px;
-    margin-top:20px;
-    color:#00ff88;
-}
+        button:hover {
+            background-color: #2ecc71;
+        }
 
-.box{
-    background:#1c1c1c;
-    padding:20px;
-    margin:25px auto;
-    max-width:600px;
-    border-radius:12px;
-}
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
 
-.btn{
-    display:inline-block;
-    padding:12px 22px;
-    margin-top:12px;
-    background:#ff9900;
-    color:#000;
-    text-decoration:none;
-    font-weight:bold;
-    border-radius:6px;
-}
+        section.calculator, section.affiliates {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
 
-footer{
-    margin-top:40px;
-    font-size:13px;
-    color:#aaa;
-}
-</style>
+        label {
+            margin-top: 10px;
+            display: block;
+        }
+
+        .affiliate-links a {
+            display: inline-block;
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #ff9900;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .affiliate-links a:hover {
+            background-color: #e68a00;
+        }
+
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- DISCLOSURE AMAZON -->
-<div class="box" style="font-size:14px;color:#ddd;">
-<strong>Trasparenza:</strong> alcuni link presenti in questa pagina sono link di affiliazione Amazon. Se acquisti tramite questi link potrei ricevere una commissione, senza costi aggiuntivi per te.
-</div>
+<header>
+    <h1>Calcolo Consumo e Spesa Pellet</h1>
+</header>
 
-<h1>🔥 Calcolo Spesa Pellet</h1>
+<main>
+    <!-- Calcolatore -->
+    <section class="calculator">
+        <label for="price">Prezzo di un sacco (€)</label>
+        <input type="number" id="price" placeholder="Es. 5.50" step="0.01">
 
-<p style="max-width:700px;margin:0 auto 20px auto;color:#ccc;">
-Inserisci i tuoi dati per scoprire quanto spendi di pellet e quali prodotti sono consigliati per la manutenzione della tua stufa.
-</p>
+        <label for="bags">Sacchi consumati al mese</label>
+        <input type="number" id="bags" placeholder="Es. 10">
 
-<p>Prezzo di un sacco (€)</p>
-<input type="number" id="prezzo" step="0.01">
+        <button id="calculateBtn">Calcola spesa</button>
 
-<p>Sacchi consumati al mese</p>
-<input type="number" id="sacchi">
+        <div class="result" id="result"></div>
 
-<br>
-<button onclick="calcola()">Calcola spesa</button>
+        <canvas id="costChart" width="400" height="200"></canvas>
+    </section>
 
-<div class="result" id="risultato"></div>
-<div id="prodotti"></div>
-
-<!-- FAQ SEO -->
-<div class="box">
-<h2>Domande frequenti</h2>
-
-<p><strong>Quanti sacchi di pellet servono al mese?</strong><br>
-Dipende dall’uso e dall’isolamento della casa. Questo calcolatore ti aiuta a stimare la spesa reale.</p>
-
-<p><strong>Ogni quanto pulire la stufa a pellet?</strong><br>
-Con consumi medi o alti la pulizia va fatta ogni 4–5 giorni.</p>
-
-<p><strong>Come risparmiare pellet?</strong><br>
-Pellet di qualità, buona manutenzione e un termostato aiutano a ridurre i consumi.</p>
-</div>
+    <!-- Link affiliati Amazon -->
+    <section class="affiliates">
+        <h2>Acquista Pellet su Amazon</h2>
+        <div class="affiliate-links">
+            <a href="https://www.amazon.it/dp/B01N6B1Q2Z?tag=tuo-affiliate-id" target="_blank">Sacco Pellet 15kg</a>
+            <a href="https://www.amazon.it/dp/B07H5C9RJK?tag=tuo-affiliate-id" target="_blank">Pellet Premium</a>
+            <a href="https://www.amazon.it/dp/B08L5V6W2P?tag=tuo-affiliate-id" target="_blank">Offerta Pellet</a>
+        </div>
+    </section>
+</main>
 
 <footer>
-Partecipiamo al Programma di Affiliazione Amazon. Alcuni link presenti in questa pagina sono affiliati.
+    <p>&copy; 2026 Manutenzione Pellet</p>
 </footer>
 
 <script>
-function calcola(){
+    const ctx = document.getElementById('costChart').getContext('2d');
+    let chart;
 
-let prezzo = parseFloat(document.getElementById("prezzo").value);
-let sacchi = parseFloat(document.getElementById("sacchi").value);
+    document.getElementById("calculateBtn").addEventListener("click", function() {
+        const price = parseFloat(document.getElementById("price").value);
+        const bags = parseFloat(document.getElementById("bags").value);
 
-if(isNaN(prezzo) || isNaN(sacchi)){
-    alert("Inserisci valori validi");
-    return;
-}
+        if (isNaN(price) || isNaN(bags) || price <= 0 || bags <= 0) {
+            document.getElementById("result").innerText = "Inserisci valori validi maggiori di zero!";
+            return;
+        }
 
-let mensile = prezzo * sacchi;
-let stagione = mensile * 6;
+        const monthly = price * bags;
+        const yearly = monthly * 12;
 
-let html = "";
+        document.getElementById("result").innerHTML =
+            `Spesa mensile stimata: € ${monthly.toFixed(2)}<br>` +
+            `Spesa annuale stimata: € ${yearly.toFixed(2)}`;
 
-html += `
-<div class="box">
-<h2>Risultato</h2>
-<p><strong>Spesa mensile:</strong> ${mensile.toFixed(2)} €</p>
-<p><strong>Spesa stagione (6 mesi):</strong> ${stagione.toFixed(2)} €</p>
-</div>
-`;
+        // Se il grafico esiste già, distruggerlo prima di crearne uno nuovo
+        if (chart) {
+            chart.destroy();
+        }
 
-/* PELLET – sempre */
-html += `
-<div class="box">
-<h3>🔥 Pellet certificato alta resa</h3>
-<p>Migliore combustione e meno residui nella stufa.</p>
-<a href="https://amzn.to/4r0pltf" target="_blank" class="btn">Vedi offerta su Amazon</a>
-</div>
-`;
-
-/* KIT PULIZIA – consumo medio */
-if(sacchi > 10){
-html += `
-<div class="box">
-<h3>🧰 Kit pulizia stufa a pellet</h3>
-<p>Consigliato per manutenzione settimanale.</p>
-<a href="https://amzn.to/4s9idvr" target="_blank" class="btn">Scopri il prodotto</a>
-</div>
-`;
-}
-
-/* ASPIRACENERE – consumo alto */
-if(sacchi > 20){
-html += `
-<div class="box">
-<h3>🔧 Aspiracenere per stufa a pellet</h3>
-<p>Indispensabile con consumi elevati.</p>
-<a href="https://amzn.to/4azK2Y0" target="_blank" class="btn">Vedi su Amazon</a>
-</div>
-`;
-}
-
-/* TERMOSTATO – sempre */
-html += `
-<div class="box">
-<h3>🌡️ Termostato ambiente digitale</h3>
-<p>Aiuta a ridurre i consumi e migliorare il comfort.</p>
-<a href="https://amzn.to/4saBqNi" target="_blank" class="btn">Scopri su Amazon</a>
-</div>
-`;
-
-document.getElementById("prodotti").innerHTML = html;
-}
+        chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Mensile', 'Annuale'],
+                datasets: [{
+                    label: 'Spesa (€)',
+                    data: [monthly, yearly],
+                    backgroundColor: ['#27ae60', '#2c3e50']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
 </script>
 
 </body>
