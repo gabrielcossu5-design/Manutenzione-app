@@ -4,25 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calcolo Spesa Pellet Online - Consumo Mensile e Annuale</title>
-<meta name="description" content="Calcola quanto spendi di pellet al mese e all'anno. Scopri come ridurre i consumi della tua stufa a pellet con consigli pratici.">
+<title>Calcolo Spesa Pellet Online | Consumo Mensile e Annuale</title>
+
+<meta name="description" content="Calcola online quanto spendi di pellet al mese, durante l'inverno e all'anno. Scopri come ridurre i consumi della tua stufa a pellet.">
+<meta name="keywords" content="calcolo pellet, consumo stufa pellet, quanto pellet al mese, costo pellet inverno">
+<meta name="author" content="Calcolo Pellet">
 
 <style>
 body{
   font-family: Arial, sans-serif;
-  background:#f4f6f8;
+  background: linear-gradient(to bottom, #f4f6f8, #e9eef3);
   margin:0;
   padding:20px;
   line-height:1.6;
 }
 
 .container{
-  max-width:700px;
+  max-width:800px;
   margin:auto;
   background:white;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  padding:30px;
+  border-radius:15px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.1);
 }
 
 h1,h2{
@@ -31,16 +34,16 @@ h1,h2{
 
 input{
   width:100%;
-  padding:12px;
+  padding:14px;
   margin-top:10px;
-  border-radius:8px;
+  border-radius:10px;
   border:1px solid #ccc;
   font-size:16px;
 }
 
 button{
   width:100%;
-  padding:14px;
+  padding:15px;
   margin-top:15px;
   border:none;
   background:#ff6600;
@@ -48,6 +51,7 @@ button{
   font-size:18px;
   border-radius:10px;
   cursor:pointer;
+  font-weight:bold;
 }
 
 button:hover{
@@ -55,14 +59,17 @@ button:hover{
 }
 
 .risultato{
-  margin-top:20px;
+  margin-top:25px;
   font-size:18px;
   text-align:center;
   font-weight:bold;
+  background:#f2f9f2;
+  padding:15px;
+  border-radius:10px;
 }
 
 .sezione{
-  margin-top:40px;
+  margin-top:50px;
 }
 
 .prodotti a{
@@ -74,6 +81,15 @@ button:hover{
   border-radius:8px;
   color:#333;
   font-weight:bold;
+  transition:0.3s;
+}
+
+.prodotti a:hover{
+  background:#dce3ea;
+}
+
+.faq{
+  margin-top:20px;
 }
 
 .footer{
@@ -83,6 +99,30 @@ button:hover{
   color:gray;
 }
 </style>
+
+<!-- Schema FAQ per Google -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [{
+   "@type": "Question",
+   "name": "Quanto pellet si consuma al mese?",
+   "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "In media una famiglia consuma tra 20 e 40 sacchi al mese durante l'inverno."
+   }
+ },{
+   "@type": "Question",
+   "name": "Quanto costa il pellet per un inverno?",
+   "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "La spesa dipende dal prezzo del sacco e dal consumo mensile. Con 30 sacchi al mese a 6 euro, la spesa stagionale è circa 1.080 euro."
+   }
+ }]
+}
+</script>
+
 </head>
 
 <body>
@@ -91,7 +131,7 @@ button:hover{
 
 <h1>🔥 Calcolo Spesa Pellet</h1>
 
-<p>Inserisci il prezzo di un sacco di pellet e quanti sacchi utilizzi al mese per scoprire quanto spendi realmente.</p>
+<p>Scopri in pochi secondi quanto spendi realmente di pellet al mese, durante la stagione invernale e in un anno intero.</p>
 
 <label>Prezzo sacco (€)</label>
 <input type="number" id="prezzo" placeholder="es. 6.50">
@@ -103,26 +143,36 @@ button:hover{
 
 <div class="risultato" id="risultato"></div>
 
-<!-- Sezione informativa SEO -->
+<!-- Sezione SEO informativa -->
 <div class="sezione">
-<h2>📊 Consumo Medio Stufa a Pellet</h2>
+<h2>📊 Consumo Medio di una Stufa a Pellet</h2>
 
-<p>Una stufa a pellet consuma mediamente tra <strong>0,5 kg e 2,5 kg all’ora</strong> in base alla potenza e all’isolamento della casa.</p>
+<p>Una stufa a pellet consuma mediamente tra <strong>0,5 kg e 2,5 kg all’ora</strong>, in base alla potenza e all’isolamento dell’abitazione.</p>
 
-<p>Durante l’inverno una famiglia può utilizzare tra <strong>20 e 40 sacchi al mese</strong>.</p>
-
-<p>Una corretta manutenzione e l'utilizzo di pellet certificato possono ridurre i consumi fino al 15%.</p>
+<p>In inverno una famiglia può utilizzare tra <strong>20 e 40 sacchi al mese</strong>. Una corretta manutenzione può ridurre i consumi fino al 15%.</p>
 
 </div>
 
-<!-- Sezione prodotti affiliati -->
+<!-- Prodotti affiliati -->
 <div class="sezione prodotti">
-<h2>🧰 Prodotti Consigliati per Ridurre i Consumi</h2>
+<h2>🧰 Prodotti Consigliati per Risparmiare Pellet</h2>
 
-<a href="#">🧹 Aspiracenere Professionale per Stufa a Pellet</a>
-<a href="#">🧰 Kit Completo Pulizia Stufa</a>
+<a href="#">🧹 Aspiracenere Professionale</a>
+<a href="#">🧰 Kit Pulizia Completo</a>
 <a href="#">🌲 Pellet Certificato ENplus A1</a>
-<a href="#">🌡️ Termostato Smart per Risparmio Energetico</a>
+<a href="#">🌡️ Termostato Smart</a>
+
+</div>
+
+<!-- FAQ visibili -->
+<div class="sezione faq">
+<h2>❓ Domande Frequenti</h2>
+
+<h3>Quanto pellet serve per una casa di 100 mq?</h3>
+<p>Dipende dall'isolamento e dalle ore di utilizzo, ma mediamente tra 25 e 35 sacchi al mese in inverno.</p>
+
+<h3>Conviene il pellet rispetto al metano?</h3>
+<p>In molte zone il pellet è ancora più economico, ma dipende dal prezzo locale dei combustibili.</p>
 
 </div>
 
