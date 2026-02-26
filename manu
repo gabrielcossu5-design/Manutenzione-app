@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Manutenzione Pro + Monetizzazione</title>
+<style>
+    body { margin:0; font-family: Arial, sans-serif; background:#f0f2f5; }
+    header { background:#4CAF50; color:white; padding:20px; text-align:center; font-size:24px; position: sticky; top:0; z-index: 100; }
+    main { max-width: 600px; margin:20px auto; padding:0 10px; }
+    .banner { background:#ffeb3b; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center; font-weight:bold; font-size:16px; }
+    form { background:white; padding:20px; border-radius:8px; box-shadow:0 0 10px rgba(0,0,0,0.1); margin-bottom:20px; }
+    input, textarea, button { width:100%; padding:10px; margin-bottom:10px; font-size:16px; box-sizing:border-box; }
+    button { background:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer; transition:0.2s; }
+    button:hover { background:#45a049; }
+    .manutenzione-card { background:white; padding:15px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.1); margin-bottom:15px; position: relative; transition:0.2s; }
+    .manutenzione-card:hover { box-shadow:0 6px 15px rgba(0,0,0,0.2); }
+    .manutenzione-card h3 { margin:0 0 5px 0; font-size:18px; color:#333; }
+    .manutenzione-card p { margin:5px 0; font-size:14px; color:#555; }
+    .links-affiliati { margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; }
+    .links-affiliati a { padding:8px 12px; background:#1a73e8; color:white; border-radius:6px; text-decoration:none; font-weight:bold; transition:0.2s; }
+    .links-affiliati a:hover { background:#155ab6; }
+    .delete-btn { position:absolute; top:10px; right:10px; background:#f44336; color:white; border:none; border-radius:6px; padding:5px 10px; cursor:pointer; transition:0.2s; }
+    .delete-btn:hover { background:#d32f2f; }
+    @media(max-width:600px) { main { margin:10px auto; } }
+</style>
+</head>
+<body>
+
+<header>App Manutenzione Pro + Monetizzazione</header>
+
+<main>
+    <!-- Banner affiliato principale -->
+    <div class="banner">
+        🔥 Scopri i migliori prodotti per la manutenzione! Risparmia ora! 🔗
+    </div>
+
+    <form id="manutenzioneForm">
+        <input type="text" id="titolo" placeholder="Titolo manutenzione" required>
+        <textarea id="descrizione" placeholder="Descrizione" rows="3" required></textarea>
+        <input type="date" id="data" required>
+        <input type="text" id="link1" placeholder="Link affiliato 1 (opzionale)">
+        <input type="text" id="link2" placeholder="Link affiliato 2 (opzionale)">
+        <input type="text" id="link3" placeholder="Link affiliato 3 (opzionale)">
+        <button type="submit">Aggiungi Manutenzione</button>
+    </form>
+
+    <div id="manutenzioniList"></div>
+
+    <!-- Banner affiliato secondario -->
+    <div class="banner">
+        🛒 Non perdere le offerte sui prodotti consigliati!
+    </div>
+</main>
+
+<script>
+    let manutenzioni = JSON.parse(localStorage.getItem('manutenzioni')) || [];
+    const form = document.getElementById('manutenzioneForm');
+    const manutenzioniList = document.getElementById('manutenzioniList');
+
+    function salvaManutenzioni() {
+        localStorage.setItem('manutenzioni', JSON.stringify(manutenzioni));
+    }
+
+    function renderLista() {
+        manutenzioniList.innerHTML = '';
+        manutenzioni.forEach((m, i) => {
+            const card = document.createElement('div');
+            card.className = 'manutenzione-card';
+            card.innerHTML = `
+                <button class="delete-btn" onclick="elimina(${i})">Elimina</button>
+                <h3>${m.titolo} - ${m.data}</h3>
+                <p>${m.descrizione}</p>
+                <div class="links-affiliati">
+                    ${m.link1 ? `<a href="${m.link1}" target="_blank" onclick="tracciaClic('${m.link1}')">Compra Ora 1</a>` : ''}
+                    ${m.link2 ? `<a href="${m.link2}" target="_blank" onclick="tracciaClic('${m.link2}')">Compra Ora 2</a>` : ''}
+                    ${m.link3 ? `<a href="${m.link3}" target="_blank" onclick="tracciaClic('${m.link3}')">Compra Ora 3</a>` : ''}
+                </div>
+            `;
+            manutenzioniList.appendChild(card);
+        });
+    }
+
+    function elimina(index) {
+        manutenzioni.splice(index, 1);
+        salvaManutenzioni();
+        renderLista();
+    }
+
+    function tracciaClic(link) {
+        console.log(`Clic sul link affiliato: ${link}`);
+        // Qui puoi integrare Google Analytics o altro servizio per tracciare i clic
+    }
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        const titolo = document.getElementById('titolo').value;
+        const descrizione = document.getElementById('descrizione').value;
+        const data = document.getElementById('data').value;
+        const link1 = document.getElementById('link1').value;
+        const link2 = document.getElementById('link2').value;
+        const link3 = document.getElementById('link3').value;
+
+        manutenzioni.push({titolo, descrizione, data, link1, link2, link3});
+        salvaManutenzioni();
+        renderLista();
+        form.reset();
+    });
+
+    renderLista();
+</script>
+
+</body>
+</html>
