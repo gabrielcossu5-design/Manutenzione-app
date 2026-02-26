@@ -1,207 +1,142 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolo Spesa Pellet</title>
 
-<title>Calcolo Spesa Pellet Online | Consumo Mensile e Annuale</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+            margin:0;
+            padding:20px;
+        }
 
-<meta name="description" content="Calcola online quanto spendi di pellet al mese, durante l'inverno e all'anno. Scopri come ridurre i consumi della tua stufa a pellet.">
-<meta name="keywords" content="calcolo pellet, consumo stufa pellet, quanto pellet al mese, costo pellet inverno">
-<meta name="author" content="Calcolo Pellet">
+        .container{
+            max-width:500px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
 
-<style>
-body{
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom, #f4f6f8, #e9eef3);
-  margin:0;
-  padding:20px;
-  line-height:1.6;
-}
+        h1{
+            text-align:center;
+        }
 
-.container{
-  max-width:800px;
-  margin:auto;
-  background:white;
-  padding:30px;
-  border-radius:15px;
-  box-shadow:0 6px 15px rgba(0,0,0,0.1);
-}
+        input{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+            border-radius:6px;
+            border:1px solid #ccc;
+        }
 
-h1,h2{
-  text-align:center;
-}
+        button{
+            width:100%;
+            padding:12px;
+            background:#2e7d32;
+            color:white;
+            border:none;
+            border-radius:6px;
+            font-size:16px;
+            cursor:pointer;
+        }
 
-input{
-  width:100%;
-  padding:14px;
-  margin-top:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-  font-size:16px;
-}
+        button:hover{
+            background:#1b5e20;
+        }
 
-button{
-  width:100%;
-  padding:15px;
-  margin-top:15px;
-  border:none;
-  background:#ff6600;
-  color:white;
-  font-size:18px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:bold;
-}
+        #risultato{
+            margin-top:15px;
+            font-weight:bold;
+            text-align:center;
+        }
 
-button:hover{
-  background:#e65c00;
-}
+        .prodotti{
+            margin-top:30px;
+        }
 
-.risultato{
-  margin-top:25px;
-  font-size:18px;
-  text-align:center;
-  font-weight:bold;
-  background:#f2f9f2;
-  padding:15px;
-  border-radius:10px;
-}
+        .prodotti ul{
+            list-style:none;
+            padding:0;
+        }
 
-.sezione{
-  margin-top:50px;
-}
+        .prodotti li{
+            margin-bottom:12px;
+        }
 
-.prodotti a{
-  display:block;
-  margin:10px 0;
-  text-decoration:none;
-  background:#eef2f5;
-  padding:12px;
-  border-radius:8px;
-  color:#333;
-  font-weight:bold;
-  transition:0.3s;
-}
+        .btn-affiliazione{
+            background:#ff6600;
+            color:white;
+            padding:6px 12px;
+            border-radius:6px;
+            text-decoration:none;
+            font-weight:bold;
+        }
 
-.prodotti a:hover{
-  background:#dce3ea;
-}
-
-.faq{
-  margin-top:20px;
-}
-
-.footer{
-  margin-top:40px;
-  font-size:14px;
-  text-align:center;
-  color:gray;
-}
-</style>
-
-<!-- Schema FAQ per Google -->
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "FAQPage",
- "mainEntity": [{
-   "@type": "Question",
-   "name": "Quanto pellet si consuma al mese?",
-   "acceptedAnswer": {
-     "@type": "Answer",
-     "text": "In media una famiglia consuma tra 20 e 40 sacchi al mese durante l'inverno."
-   }
- },{
-   "@type": "Question",
-   "name": "Quanto costa il pellet per un inverno?",
-   "acceptedAnswer": {
-     "@type": "Answer",
-     "text": "La spesa dipende dal prezzo del sacco e dal consumo mensile. Con 30 sacchi al mese a 6 euro, la spesa stagionale è circa 1.080 euro."
-   }
- }]
-}
-</script>
-
+        .btn-affiliazione:hover{
+            background:#e65100;
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
+    <h1>🔥 Calcolo Spesa Pellet</h1>
 
-<h1>🔥 Calcolo Spesa Pellet</h1>
+    <label>Prezzo di un sacco (€)</label>
+    <input type="number" id="prezzo" placeholder="Es. 5.50">
 
-<p>Scopri in pochi secondi quanto spendi realmente di pellet al mese, durante la stagione invernale e in un anno intero.</p>
+    <label>Numero sacchi al mese</label>
+    <input type="number" id="sacchi" placeholder="Es. 30">
 
-<label>Prezzo sacco (€)</label>
-<input type="number" id="prezzo" placeholder="es. 6.50">
+    <button onclick="calcolaSpesa()">Calcola spesa</button>
 
-<label>Sacchi al mese</label>
-<input type="number" id="sacchi" placeholder="es. 30">
+    <div id="risultato"></div>
 
-<button onclick="calcola()">Calcola Spesa</button>
+    <div class="prodotti">
+        <h3>🛒 Prodotti consigliati</h3>
+        <ul>
+            <li>
+                🌡️ Termostato WiFi consigliato:
+                <a href="https://amzn.to/3MsTovy" target="_blank" class="btn-affiliazione">
+                    🔥 Acquista su Amazon
+                </a>
+            </li>
 
-<div class="risultato" id="risultato"></div>
+            <li>
+                🧹 Aspiracenere per stufa:
+                <a href="#" target="_blank" class="btn-affiliazione">
+                    Vedi su Amazon
+                </a>
+            </li>
 
-<!-- Sezione SEO informativa -->
-<div class="sezione">
-<h2>📊 Consumo Medio di una Stufa a Pellet</h2>
-
-<p>Una stufa a pellet consuma mediamente tra <strong>0,5 kg e 2,5 kg all’ora</strong>, in base alla potenza e all’isolamento dell’abitazione.</p>
-
-<p>In inverno una famiglia può utilizzare tra <strong>20 e 40 sacchi al mese</strong>. Una corretta manutenzione può ridurre i consumi fino al 15%.</p>
-
-</div>
-
-<!-- Prodotti affiliati -->
-<div class="sezione prodotti">
-<h2>🧰 Prodotti Consigliati per Risparmiare Pellet</h2>
-
-<a href="#">🧹 Aspiracenere Professionale</a>
-<a href="#">🧰 Kit Pulizia Completo</a>
-<a href="#">🌲 Pellet Certificato ENplus A1</a>
-<a href="#">🌡️ Termostato Smart</a>https://amzn.to/3MsTovy
-
-</div>
-
-<!-- FAQ visibili -->
-<div class="sezione faq">
-<h2>❓ Domande Frequenti</h2>
-
-<h3>Quanto pellet serve per una casa di 100 mq?</h3>
-<p>Dipende dall'isolamento e dalle ore di utilizzo, ma mediamente tra 25 e 35 sacchi al mese in inverno.</p>
-
-<h3>Conviene il pellet rispetto al metano?</h3>
-<p>In molte zone il pellet è ancora più economico, ma dipende dal prezzo locale dei combustibili.</p>
-
-</div>
-
-<div class="footer">
-<p>Questo sito può contenere link affiliati. Senza costi aggiuntivi per te, potremmo ricevere una commissione sugli acquisti.</p>
-</div>
-
+            <li>
+                🪵 Pellet alta qualità:
+                <a href="#" target="_blank" class="btn-affiliazione">
+                    Vedi su Amazon
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
 
 <script>
-function calcola(){
-  const prezzo = parseFloat(document.getElementById("prezzo").value);
-  const sacchi = parseFloat(document.getElementById("sacchi").value);
+function calcolaSpesa(){
+    let prezzo = parseFloat(document.getElementById("prezzo").value);
+    let sacchi = parseFloat(document.getElementById("sacchi").value);
 
-  if(isNaN(prezzo) || isNaN(sacchi)){
-    document.getElementById("risultato").innerHTML="Inserisci valori validi.";
-    return;
-  }
+    if(isNaN(prezzo) || isNaN(sacchi)){
+        document.getElementById("risultato").innerText = "Inserisci valori validi.";
+        return;
+    }
 
-  const mensile = prezzo * sacchi;
-  const annuale = mensile * 12;
-  const stagione = mensile * 6;
-  const giornaliero = mensile / 30;
-
-  document.getElementById("risultato").innerHTML =
-  "💰 Spesa mensile: € " + mensile.toFixed(2) +
-  "<br>📅 Spesa stagione (6 mesi): € " + stagione.toFixed(2) +
-  "<br>📆 Spesa annuale: € " + annuale.toFixed(2) +
-  "<br>📌 Costo medio giornaliero: € " + giornaliero.toFixed(2);
+    let totale = prezzo * sacchi;
+    document.getElementById("risultato").innerText = 
+        "Spesa mensile: € " + totale.toFixed(2);
 }
 </script>
 
