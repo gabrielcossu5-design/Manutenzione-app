@@ -3,24 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calcolo Consumo e Spesa Pellet</title>
+<title>Calcolo Spesa Pellet</title>
 
 <style>
 body{
-    font-family: Arial, sans-serif;
-    background:#111;
+    font-family:Arial;
+    background:#0f0f0f;
     color:white;
     text-align:center;
-    padding:30px;
+    padding:25px;
 }
 
-h1{
-    color:#ff9900;
-}
+h1{color:#ff9900;}
 
-input, button{
-    padding:10px;
-    margin:10px;
+input,button{
+    padding:12px;
+    margin:8px;
     font-size:18px;
     border-radius:6px;
     border:none;
@@ -32,23 +30,13 @@ button{
     cursor:pointer;
 }
 
-button:hover{
-    background:#e68a00;
-}
-
 .result{
     font-size:22px;
     margin-top:20px;
     color:#00ff88;
 }
 
-.consiglio{
-    margin-top:20px;
-    font-size:18px;
-    color:#ddd;
-}
-
-.prodotto {
+.box{
     background:#1c1c1c;
     padding:20px;
     margin:20px auto;
@@ -56,104 +44,93 @@ button:hover{
     border-radius:10px;
 }
 
-.btn {
+.btn{
     display:inline-block;
-    margin-top:10px;
     padding:10px 20px;
+    margin-top:10px;
     background:#ff9900;
     color:black;
     text-decoration:none;
     font-weight:bold;
     border-radius:6px;
 }
-
-.btn:hover {
-    background:#e68a00;
-}
 </style>
 </head>
 
 <body>
 
-<h1>🔥 Calcolo Consumo e Spesa Pellet</h1>
+<h1>🔥 Calcolo Consumo Pellet</h1>
 
-<p>Prezzo di un sacco (€)</p>
+<p>Prezzo sacco (€)</p>
 <input type="number" id="prezzo" step="0.01">
 
-<p>Quanti sacchi consumi al mese?</p>
+<p>Sacchi al mese</p>
 <input type="number" id="sacchi">
 
 <br>
 <button onclick="calcola()">Calcola</button>
 
 <div class="result" id="risultato"></div>
-<div class="consiglio" id="consiglio"></div>
+<div id="consiglio"></div>
+<div id="prodotti"></div>
 
 <script>
 function calcola(){
 
-    let prezzo = parseFloat(document.getElementById("prezzo").value);
-    let sacchi = parseFloat(document.getElementById("sacchi").value);
+let prezzo = parseFloat(document.getElementById("prezzo").value);
+let sacchi = parseFloat(document.getElementById("sacchi").value);
 
-    if(isNaN(prezzo) || isNaN(sacchi)){
-        alert("Inserisci valori validi");
-        return;
-    }
+if(isNaN(prezzo)||isNaN(sacchi)){alert("Inserisci valori");return;}
 
-    let mensile = prezzo * sacchi;
-    let stagione = mensile * 6;
+let mensile = prezzo*sacchi;
+let stagione = mensile*6;
 
-    document.getElementById("risultato").innerHTML =
-        "Spesa mensile: " + mensile.toFixed(2) + " €<br>" +
-        "Spesa stagione (6 mesi): " + stagione.toFixed(2) + " €";
+document.getElementById("risultato").innerHTML=
+"Spesa mensile: "+mensile.toFixed(2)+" €<br>"+
+"Stagione: "+stagione.toFixed(2)+" €";
 
-    let messaggio = "";
+let html="";
 
-    if(sacchi <= 10){
-        messaggio = "Consumo basso 👍 Una pulizia settimanale è sufficiente.";
-    } else if(sacchi <= 25){
-        messaggio = "Consumo medio 🔥 Pulizia ogni 4-5 giorni consigliata.";
-    } else {
-        messaggio = "Consumo alto ⚠️ Pulizia frequente e controllo guarnizioni consigliato.";
-    }
+html+=`
+<div class="box">
+<h3>🔥 Pellet consigliato</h3>
+<p>Pellet certificato per miglior resa.</p>
+<a href="https://amzn.to/4aWETIp" target="_blank" class="btn">Vedi offerta</a>
+</div>
+`;
 
-    document.getElementById("consiglio").innerHTML = messaggio;
+if(sacchi>10){
+html+=`
+<div class="box">
+<h3>🧰 Kit pulizia stufa</h3>
+<p>Pulizia settimanale consigliata.</p>
+<a href="https://amzn.to/4s9idvr" target="_blank" class="btn">Vedi prodotto</a>
+</div>
+`;
+}
+
+if(sacchi>20){
+html+=`
+<div class="box">
+<h3>🔧 Aspiracenere</h3>
+<p>Con questo consumo serve pulizia frequente.</p>
+<a href="https://amzn.to/4azK2Y0" target="_blank" class="btn">Vedi su Amazon</a>
+</div>
+`;
+}
+
+html+=`
+<div class="box">
+<h3>🌡️ Termostato digitale</h3>
+<p>Riduce i consumi e ottimizza la temperatura.</p>
+<a href="https://amzn.to/4saBqNi" target="_blank" class="btn">Scopri</a>
+</div>
+`;
+
+document.getElementById("prodotti").innerHTML=html;
+
 }
 </script>
-
-<h2 style="margin-top:50px;">🔥 Prodotti consigliati per la tua stufa</h2>
-
-<div class="prodotto">
-    <h3>🔧 Aspiracenere per stufa a pellet</h3>
-    <p>Ideale per pulizia frequente del braciere.</p>
-    <a href="https://amzn.to/4azK2Y0" target="_blank" class="btn">
-        Vedi su Amazon
-    </a>
-</div>
-
-<div class="prodotto">
-    <h3>🔥 Pellet certificato alta resa</h3>
-    <p>Migliore combustione e meno residui.</p>
-    <a href="https://amzn.to/4aWETIp" target="_blank" class="btn">
-        Vedi offerta
-    </a>
-</div>
-
-<div class="prodotto">
-    <h3>🧰 Kit pulizia completo</h3>
-    <p>Perfetto per manutenzione settimanale.</p>
-    <a href="https://amzn.to/4s9idvr" target="_blank" class="btn">
-        Scopri il prodotto
-    </a>
-</div>
-
-<div class="prodotto">
-    <h3>🌡️ Termostato ambiente digitale</h3>
-    <p>Riduce i consumi e ottimizza la temperatura.</p>
-    <a href="https://amzn.to/4saBqNi" target="_blank" class="btn">
-        Vedi su Amazon
-    </a>
-</div>
 
 </body>
 </html>
