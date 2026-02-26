@@ -3,25 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calcolo Spesa Pellet</title>
+
+<title>Calcolo Consumo e Spesa Pellet | Stufa a Pellet</title>
+
+<meta name="description" content="Calcola il consumo e la spesa del pellet, scopri ogni quanto fare la manutenzione della stufa e i prodotti consigliati per risparmiare.">
+<meta name="keywords" content="calcolo pellet, consumo pellet, spesa pellet, manutenzione stufa pellet">
+<meta name="robots" content="index, follow">
 
 <style>
 body{
-    font-family:Arial;
+    font-family:Arial, sans-serif;
     background:#0f0f0f;
-    color:white;
+    color:#ffffff;
     text-align:center;
     padding:25px;
 }
 
 h1{color:#ff9900;}
+h2{color:#ffb84d;}
 
-input,button{
+input, button{
     padding:12px;
     margin:8px;
     font-size:18px;
     border-radius:6px;
     border:none;
+    width:90%;
+    max-width:320px;
 }
 
 button{
@@ -39,32 +47,51 @@ button{
 .box{
     background:#1c1c1c;
     padding:20px;
-    margin:20px auto;
-    max-width:500px;
-    border-radius:10px;
+    margin:25px auto;
+    max-width:600px;
+    border-radius:12px;
 }
 
 .btn{
     display:inline-block;
-    padding:10px 20px;
-    margin-top:10px;
+    padding:12px 22px;
+    margin-top:12px;
     background:#ff9900;
-    color:black;
+    color:#000;
     text-decoration:none;
     font-weight:bold;
     border-radius:6px;
+}
+
+.btn:hover{
+    background:#e68a00;
+}
+
+footer{
+    margin-top:40px;
+    font-size:13px;
+    color:#aaa;
 }
 </style>
 </head>
 
 <body>
 
+<!-- DISCLOSURE AMAZON -->
+<div class="box" style="font-size:14px;color:#ddd;">
+<strong>Trasparenza:</strong> alcuni link presenti in questa pagina sono link di affiliazione Amazon. Se acquisti tramite questi link potrei ricevere una commissione, senza costi aggiuntivi per te.
+</div>
+
 <h1>🔥 Calcolo Consumo Pellet</h1>
 
-<p>Prezzo sacco (€)</p>
+<p style="max-width:700px;margin:0 auto 20px auto;color:#ccc;">
+Inserisci i tuoi dati per stimare la spesa del pellet e capire quando è necessaria la manutenzione della stufa, evitando sprechi e consumi inutili.
+</p>
+
+<p>Prezzo di un sacco (€)</p>
 <input type="number" id="prezzo" step="0.01">
 
-<p>Sacchi al mese</p>
+<p>Sacchi consumati al mese</p>
 <input type="number" id="sacchi">
 
 <br>
@@ -74,61 +101,102 @@ button{
 <div id="consiglio"></div>
 <div id="prodotti"></div>
 
+<!-- FAQ -->
+<div class="box">
+<h2>Domande frequenti sulla stufa a pellet</h2>
+
+<p><strong>Quanti sacchi di pellet servono al mese?</strong><br>
+Dipende da isolamento, temperatura e utilizzo. Il calcolatore fornisce una stima realistica.</p>
+
+<p><strong>Ogni quanto va pulita la stufa a pellet?</strong><br>
+Con consumi medi o alti, la pulizia del braciere è consigliata ogni 4–5 giorni.</p>
+
+<p><strong>Come ridurre il consumo di pellet?</strong><br>
+Pellet certificato e un buon termostato aiutano a ridurre sprechi e costi.</p>
+</div>
+
+<footer>
+Partecipiamo al Programma di Affiliazione Amazon. Alcuni link presenti in questa pagina sono affiliati.
+</footer>
+
 <script>
 function calcola(){
 
 let prezzo = parseFloat(document.getElementById("prezzo").value);
 let sacchi = parseFloat(document.getElementById("sacchi").value);
 
-if(isNaN(prezzo)||isNaN(sacchi)){alert("Inserisci valori");return;}
+if(isNaN(prezzo) || isNaN(sacchi)){
+    alert("Inserisci valori validi");
+    return;
+}
 
-let mensile = prezzo*sacchi;
-let stagione = mensile*6;
+let mensile = prezzo * sacchi;
+let stagione = mensile * 6;
 
-document.getElementById("risultato").innerHTML=
-"Spesa mensile: "+mensile.toFixed(2)+" €<br>"+
-"Stagione: "+stagione.toFixed(2)+" €";
+document.getElementById("risultato").innerHTML =
+"Spesa mensile: " + mensile.toFixed(2) + " €<br>" +
+"Spesa stagione (6 mesi): " + stagione.toFixed(2) + " €";
 
-let html="";
+let prodottiHTML = "";
 
-html+=`
+// Pellet sempre visibile
+prodottiHTML += `
 <div class="box">
-<h3>🔥 Pellet consigliato</h3>
-<p>Pellet certificato per miglior resa.</p>
-<a href="https://amzn.to/4aWETIp" target="_blank" class="btn">Vedi offerta</a>
+<h3>🔥 Pellet certificato alta resa</h3>
+<p>Migliore combustione e meno residui nella stufa.</p>
+<a href="https://amzn.to/4aWETIp" target="_blank" class="btn" onclick="trackClick('pellet')">
+Vedi offerta su Amazon
+</a>
 </div>
 `;
 
-if(sacchi>10){
-html+=`
+// Kit pulizia consumo medio
+if(sacchi > 10){
+prodottiHTML += `
 <div class="box">
-<h3>🧰 Kit pulizia stufa</h3>
-<p>Pulizia settimanale consigliata.</p>
-<a href="https://amzn.to/4s9idvr" target="_blank" class="btn">Vedi prodotto</a>
+<h3>🧰 Kit pulizia stufa a pellet</h3>
+<p>Consigliato per manutenzione settimanale.</p>
+<a href="https://amzn.to/4s9idvr" target="_blank" class="btn" onclick="trackClick('kit_pulizia')">
+Scopri il prodotto
+</a>
 </div>
 `;
 }
 
-if(sacchi>20){
-html+=`
+// Aspiracenere consumo alto
+if(sacchi > 20){
+prodottiHTML += `
 <div class="box">
-<h3>🔧 Aspiracenere</h3>
-<p>Con questo consumo serve pulizia frequente.</p>
-<a href="https://amzn.to/4azK2Y0" target="_blank" class="btn">Vedi su Amazon</a>
+<h3>🔧 Aspiracenere per stufa a pellet</h3>
+<p>Indispensabile con consumi elevati.</p>
+<a href="https://amzn.to/4azK2Y0" target="_blank" class="btn" onclick="trackClick('aspiracenere')">
+Vedi su Amazon
+</a>
 </div>
 `;
 }
 
-html+=`
+// Termostato sempre visibile
+prodottiHTML += `
 <div class="box">
-<h3>🌡️ Termostato digitale</h3>
-<p>Riduce i consumi e ottimizza la temperatura.</p>
-<a href="https://amzn.to/4saBqNi" target="_blank" class="btn">Scopri</a>
+<h3>🌡️ Termostato ambiente digitale</h3>
+<p>Aiuta a ridurre i consumi e stabilizzare la temperatura.</p>
+<a href="https://amzn.to/4saBqNi" target="_blank" class="btn" onclick="trackClick('termostato')">
+Scopri su Amazon
+</a>
 </div>
 `;
 
-document.getElementById("prodotti").innerHTML=html;
+document.getElementById("prodotti").innerHTML = prodottiHTML;
+}
 
+function trackClick(nome){
+    try{
+        let key = "click_" + nome;
+        let n = parseInt(localStorage.getItem(key) || "0", 10) + 1;
+        localStorage.setItem(key, n);
+        console.log("Click:", nome, n);
+    }catch(e){}
 }
 </script>
 
